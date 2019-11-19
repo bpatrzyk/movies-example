@@ -4,8 +4,8 @@ import { asyncErrorHandler } from '../utils/errors/asyncErrorHandler';
 export const commentsRouter: Router = Router();
 
 commentsRouter.get('/', asyncErrorHandler((req, res) => {
-  res.json({ message: 'GET Comments' });
+  res.send({ message: 'GET Comments' });
 }));
 commentsRouter.post('/', asyncErrorHandler((req, res) => {
-  res.json({ message: 'POST Comments' });
+  res.send({ message: 'POST Comments' });
 }));

@@ -1,9 +1,10 @@
-import dotenv from 'dotenv';
+import { config as dotenv } from 'dotenv';
+
+dotenv();
+
 import express from 'express';
 import { apiV1 } from './routes/apiV1';
 import { errorHandler } from './middlewares/errorHandler';
-
-dotenv.config();
 
 const port = process.env.PORT;
 
