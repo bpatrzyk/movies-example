@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import { asyncErrorHandler } from '../utils/errors/asyncErrorHandler';
 
 export const commentsRouter: Router = Router();
 
-commentsRouter.get('/', (req, res) => {
+commentsRouter.get('/', asyncErrorHandler((req, res) => {
   res.json({ message: 'GET Comments' });
-});
-commentsRouter.post('/', (req, res) => {
+}));
+commentsRouter.post('/', asyncErrorHandler((req, res) => {
   res.json({ message: 'POST Comments' });
-});
+}));

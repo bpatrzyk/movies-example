@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import { asyncErrorHandler } from '../utils/errors/asyncErrorHandler';
 
 export const moviesRouter: Router = Router();
 
-moviesRouter.get('/', (req, res) => {
+moviesRouter.get('/', asyncErrorHandler((req, res) => {
   res.json({ message: 'GET Movies' });
-});
-moviesRouter.post('/', (req, res) => {
+}));
+moviesRouter.post('/', asyncErrorHandler((req, res) => {
   res.json({ message: 'POST Movies' });
-});
+}));
