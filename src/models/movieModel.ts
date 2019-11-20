@@ -22,3 +22,9 @@ export async function createMovie(movie: MovieData) {
     .returning('*');
   return createdMovie;
 }
+
+export async function exists(title: string) {
+  const result = await db('movies').select(1)
+    .where({ title });
+  return result.length > 0;
+}
