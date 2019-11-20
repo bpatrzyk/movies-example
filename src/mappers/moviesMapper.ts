@@ -2,7 +2,7 @@ import { OMDBMovie } from '../services/omdbService';
 import { MovieData } from '../models/movieModel';
 
 export function mapOMDBMovie(obdbMovie: OMDBMovie) {
-  const year = parseInt(obdbMovie.Year);
+  const year = parseInt(obdbMovie.Year, 10);
   return {
     title: obdbMovie.Title,
     year: isNaN(year) ? null : year,

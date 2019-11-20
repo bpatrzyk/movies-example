@@ -7,7 +7,7 @@ export interface MovieData {
   country: string;
 }
 
-export interface Movie extends MovieData{
+export interface Movie extends MovieData {
   id: string;
 }
 

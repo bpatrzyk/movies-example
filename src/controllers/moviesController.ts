@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import * as service from '../services/moviesService';
-import { MovieData } from '../models/movieModel';
 import { NewMovieDTO } from '../dtos/newMovieDTO';
 
 export async function getMovies(req: Request, res: Response) {

@@ -8,8 +8,6 @@ export async function getMovies() {
 
 export async function createMovie(title: string) {
   const omdbMovie = await OMDBService.getMovie(title);
-  console.log(omdbMovie);
   const movie = mapOMDBMovie(omdbMovie);
-  console.log(movie)
   return await model.createMovie(movie);
 }

@@ -5,7 +5,7 @@ dotenv();
 import express from 'express';
 import { apiV1 } from './routes/apiV1';
 import { errorHandler } from './middlewares/errorHandler';
-import { logger } from './utils/logger'
+import { logger } from './utils/logger';
 import { errorLogMiddleware, logMiddleware } from './middlewares/logger';
 
 const port = process.env.PORT;
