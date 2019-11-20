@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as service from '../services/moviesService';
-import { NewMovieDTO } from '../dtos/newMovieDTO';
+import { NewMovieDTO } from '../dtos/movieDTO';
 
 export async function getMovies(req: Request, res: Response) {
   const movies = await service.getMovies();

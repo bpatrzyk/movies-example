@@ -15,5 +15,5 @@ export function toCommentDTO(comment: Comment) {
     movieId: comment.movie_id,
     username: comment.username,
     comment: comment.comment,
-  } as CommentDTO
+  } as CommentDTO;
 }

@@ -58,7 +58,7 @@ export async function getMovie(title: string) {
     }, response: movie,
   });
 
-  if (_.get(response, 'Response') !== 'True') {
+  if (_.get(movie, 'Response') !== 'True') {
     logger.debug(`Movie "${title}" not found in OMDB`, {
       searchParams: { title, queryUrl: queryUrl.href },
     });
