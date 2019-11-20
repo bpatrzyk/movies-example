@@ -1,7 +1,7 @@
 import { checkSchema } from 'express-validator';
 import { validator } from '../middlewares/validator';
 
-export const postMoviesValidator = [
+export const postMovieValidator = [
   ...checkSchema({
     title: {
       isString: true,

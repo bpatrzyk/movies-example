@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<any> {
       .notNullable()
       .references('id')
       .inTable('movies');
+    table.text('username').notNullable();
     table.text('comment').notNullable();
   });
 }

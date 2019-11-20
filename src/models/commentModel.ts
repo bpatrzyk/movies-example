@@ -1,13 +1,12 @@
 import { db } from './db';
 
-export interface Comment {
+export interface Comment extends CommentData {
   id: string;
-  movie_id: string;
-  comment: string;
 }
 
-export interface NewComment {
+export interface CommentData {
   movie_id: string;
+  username: string;
   comment: string;
 }
 
@@ -16,7 +15,7 @@ export async function getComments() {
     .select();
 }
 
-export async function createComment(comment: NewComment) {
+export async function createComment(comment: CommentData) {
   const [createdComment] = await db<Comment>('comments')
     .insert(comment)
     .returning('*');

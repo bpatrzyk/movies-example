@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as service from '../services/commentsService';
-import { NewComment } from '../models/commentModel';
+import * as mapper from '../mappers/commentsMapper';
+import { NewCommentDTO } from '../dtos/commentDTOs';
 
 export async function getComments(req: Request, res: Response) {
   const comments = await service.getComments();
@@ -8,6 +9,7 @@ export async function getComments(req: Request, res: Response) {
 }
 
 export async function postComment(req: Request, res: Response) {
-  const comment = await service.createComment(req.body as NewComment);
-  res.send(comment);
+  const newCommentDTO = req.body as NewCommentDTO;
+  const comment = await service.createComment(mapper.toCommentData(newCommentDTO));
+  res.send(mapper.toCommentDTO(comment));
 }
