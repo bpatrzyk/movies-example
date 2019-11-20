@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as service from '../services/moviesService';
-import { NewMovie } from '../models/movieModel';
+import { MovieData } from '../models/movieModel';
+import { NewMovieDTO } from '../dtos/newMovieDTO';
 
 export async function getMovies(req: Request, res: Response) {
   const movies = await service.getMovies();
@@ -8,6 +9,7 @@ export async function getMovies(req: Request, res: Response) {
 }
 
 export async function postMovie(req: Request, res: Response) {
-  const movie = await service.createMovie(req.body as NewMovie);
+  const newMovieDTO = req.body as NewMovieDTO;
+  const movie = await service.createMovie(newMovieDTO.title);
   res.send(movie);
 }

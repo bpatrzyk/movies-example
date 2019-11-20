@@ -1,12 +1,14 @@
 import { db } from './db';
 
-export interface Movie {
-  id: string;
-  name: string;
+export interface MovieData {
+  title: string;
+  year: number;
+  genre: string;
+  country: string;
 }
 
-export interface NewMovie {
-  name: string;
+export interface Movie extends MovieData{
+  id: string;
 }
 
 export async function getMovies() {
@@ -14,7 +16,7 @@ export async function getMovies() {
     .select();
 }
 
-export async function createMovie(movie: NewMovie) {
+export async function createMovie(movie: MovieData) {
   const [createdMovie] = await db<Movie>('movies')
     .insert(movie)
     .returning('*');

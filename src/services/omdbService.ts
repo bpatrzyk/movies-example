@@ -1,3 +1,5 @@
+// See terms of use: http://www.omdbapi.com/legal.htm
+
 import fetch from 'node-fetch';
 import url from 'url';
 
