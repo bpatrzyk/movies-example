@@ -35,6 +35,6 @@ function handleValidationError(err: ValidationError, res: Response) {
 function handleError(err: Error, res: Response) {
   const { message } = err;
   res.status(500).json({
-    message,
+    message: 'Internal server error',
   });
 }
