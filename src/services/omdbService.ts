@@ -2,6 +2,7 @@
 
 import fetch from 'node-fetch';
 import url from 'url';
+import { logger } from '../utils/logger';
 
 const API_URL = 'http://www.omdbapi.com';
 const API_KEY = process.env.OMDB_API_KEY;
@@ -41,6 +42,9 @@ export interface Rating {
 
 export async function getMovie(title: string) {
   const queryUrl = url.parse(`${API_URL}/?apikey=${API_KEY}&t=${title}`);
+  logger.debug(`Looking for the movie ${title} in OMDB database`, { searchParams: { title, queryUrl } });
   const response = await fetch(queryUrl);
-  return await response.json() as OMDBMovie;
+  const movie = await response.json() as OMDBMovie;
+  logger.debug(`Received response from OMDB service for movie ${title}`, { response: movie });
+  return movie;
 }

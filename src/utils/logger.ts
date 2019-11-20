@@ -1,9 +1,11 @@
-import * as winston from 'winston';
+import { createLogger, format, transports } from 'winston';
+
+const { combine, timestamp, json } = format;
 
 export const loggerConfig = {
   level: process.env.LOG_LEVEL ? process.env.LOG_LEVEL : 'error',
-  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
-  transports: [new winston.transports.Console()],
+  format: combine(timestamp(), json()),
+  transports: [new transports.Console()],
 };
 
-export const logger = winston.createLogger(loggerConfig);
+export const logger = createLogger(loggerConfig);
