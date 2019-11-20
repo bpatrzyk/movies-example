@@ -14,6 +14,9 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
   if (err instanceof ApiError) {
     return handleApiError(err, res);
   }
+  if (err instanceof SyntaxError) {
+    handleSyntaxError(err, res);
+  }
   handleError(err, res);
 }
 
@@ -32,8 +35,14 @@ function handleValidationError(err: ValidationError, res: Response) {
   });
 }
 
+// Handles JSON parse errors
+function handleSyntaxError(err: SyntaxError, res: Response) {
+  res.status(400).json({
+    message: err.message,
+  });
+}
+
 function handleError(err: Error, res: Response) {
-  const { message } = err;
   res.status(500).json({
     message: 'Internal server error',
   });
