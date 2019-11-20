@@ -1,14 +1,14 @@
 import { OMDBMovie } from '../services/omdbService';
 import { Movie, MovieData } from '../models/movieModel';
-import { MovieDTO } from '../dtos/movieDTO';
+import { MovieDTO } from '../dtos/movieDTOs';
 
-export function toMovie(obdbMovie: OMDBMovie) {
-  const year = parseInt(obdbMovie.Year, 10);
+export function toMovie(omdbMovie: OMDBMovie) {
+  const year = parseInt(omdbMovie.Year, 10);
   return {
-    title: obdbMovie.Title,
+    title: omdbMovie.Title,
     year: isNaN(year) ? null : year,
-    genre: obdbMovie.Genre,
-    country: obdbMovie.Country,
+    genre: omdbMovie.Genre,
+    country: omdbMovie.Country,
   } as MovieData;
 }
 

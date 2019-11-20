@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as service from '../services/moviesService';
 import * as mapper from '../mappers/moviesMapper';
-import { NewMovieDTO } from '../dtos/movieDTO';
+import { NewMovieDTO } from '../dtos/movieDTOs';
 
 export async function getMovies(req: Request, res: Response) {
   const movies = await service.getMovies();
