@@ -17,3 +17,7 @@ export function toCommentDTO(comment: Comment) {
     comment: comment.comment,
   } as CommentDTO;
 }
+
+export function toCommentsDTO(comments: Comment[]) {
+  return comments.map(comment => toCommentDTO(comment));
+}

@@ -5,7 +5,7 @@ import { NewCommentDTO } from '../dtos/commentDTOs';
 
 export async function getComments(req: Request, res: Response) {
   const comments = await service.getComments();
-  res.send(comments);
+  res.send(mapper.toCommentsDTO(comments));
 }
 
 export async function postComment(req: Request, res: Response) {

@@ -21,3 +21,7 @@ export function toMovieDTO(movie: Movie) {
     country: movie.country,
   } as MovieDTO;
 }
+
+export function toMoviesDTO(movies: Movie[]) {
+  return movies.map(movie => toMovieDTO(movie));
+}
