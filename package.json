@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix",
+    "lint-check": "tslint -p tsconfig.json -c tslint.json",
     "build": "npm run clean && tsc",
     "prestart": "npm run build",
     "start": "node .",
