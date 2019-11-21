@@ -29,7 +29,8 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
-    ]
+    ],
+    "setupFiles": ["<rootDir>/.jest/setEnvVars.ts"]
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
