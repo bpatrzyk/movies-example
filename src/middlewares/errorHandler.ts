@@ -15,7 +15,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
     return handleApiError(err, res);
   }
   if (err instanceof SyntaxError) {
-    handleSyntaxError(err, res);
+    return handleSyntaxError(err, res);
   }
   handleError(err, res);
 }

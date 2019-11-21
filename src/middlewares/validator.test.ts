@@ -1,6 +1,7 @@
-import { validator } from './validator';
-import { validationResult } from 'express-validator';
+import { Request, Response } from 'express';
 import httpMocks from 'node-mocks-http';
+import { validationResult } from 'express-validator';
+import { validator } from './validator';
 
 jest.mock('express-validator', () => ({
   validationResult: jest.fn(),
@@ -17,7 +18,7 @@ describe('validator middleware', () => {
         return ['error 1'];
       },
     }));
-    const { req, res } = httpMocks.createMocks({}, {});
+    const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
     try {
       validator(req, res, nextFn);
@@ -33,7 +34,7 @@ describe('validator middleware', () => {
         return true;
       },
     }));
-    const { req, res } = httpMocks.createMocks({}, {});
+    const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
     validator(req, res, nextFn);
     expect(nextFn).toHaveBeenCalledWith();

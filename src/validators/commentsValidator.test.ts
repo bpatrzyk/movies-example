@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import httpMocks from 'node-mocks-http';
 import { validationResult } from 'express-validator';
 import { testExpressValidatorMiddleware } from '../utils/validator';
@@ -10,7 +11,7 @@ describe('commentsValidator', () => {
         comment: 'some comment',
         username: 'user123',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([
@@ -35,7 +36,7 @@ describe('commentsValidator', () => {
         comment: 'some comment',
         username: 'user123',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([]);
@@ -53,7 +54,7 @@ describe('commentsValidator', () => {
         movieId: 'some id',
         username: 'user123',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([
@@ -78,7 +79,7 @@ describe('commentsValidator', () => {
         comment: '    some comment   ',
         username: 'user123',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([]);
@@ -96,7 +97,7 @@ describe('commentsValidator', () => {
         movieId: 'some id',
         comment: 'some comment',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([
@@ -121,7 +122,7 @@ describe('commentsValidator', () => {
         comment: 'some comment',
         username: '    user123   ',
       };
-      const { req, res } = httpMocks.createMocks({ body }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body }, {});
       await testExpressValidatorMiddleware(req, res, postCommentValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([]);
