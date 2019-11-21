@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express from 'express';
 import { moviesRouter } from './moviesRouter';
 import { commentsRouter } from './commentsRouter';
 
