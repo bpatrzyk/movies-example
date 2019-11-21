@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import httpMocks from 'node-mocks-http';
+import { ValidationError as ExpressValidationError } from 'express-validator';
 import { errorHandler } from './errorHandler';
 import { ValidationError } from '../utils/errors/ValidationError';
 import { ApiError } from '../utils/errors/ApiError';
@@ -10,29 +11,30 @@ describe('errorHandler middleware', () => {
     res.headersSent = true;
     const nextFn = jest.fn();
     const error = new Error('msg');
+
     errorHandler(error, req, res, nextFn);
+
     expect(nextFn).toHaveBeenCalledWith(error);
   });
 
   it('handles ValidationError', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
-    const error = new ValidationError('msg', [{
+
+    const validationErrors = [{
       value: undefined,
       msg: 'Invalid value',
       param: 'movieId',
       location: 'body',
-    }]);
+    }] as ExpressValidationError[];
+    const error = new ValidationError('msg', validationErrors);
+
     errorHandler(error, req, res, nextFn);
+
     expect(res.statusCode).toEqual(400);
     expect(res._getJSONData()).toEqual({
       message: 'msg',
-      errors: [{
-        value: undefined,
-        msg: 'Invalid value',
-        param: 'movieId',
-        location: 'body',
-      }],
+      errors: validationErrors,
     });
     expect(res._isEndCalled()).toBeTruthy();
   });
@@ -41,7 +43,9 @@ describe('errorHandler middleware', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
     const error = new ApiError(418, 'I\'m a Teapot');
+
     errorHandler(error, req, res, nextFn);
+
     expect(res.statusCode).toEqual(418);
     expect(res._getJSONData()).toEqual({
       message: 'I\'m a Teapot',
@@ -53,7 +57,9 @@ describe('errorHandler middleware', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
     const error = new SyntaxError('msg');
+
     errorHandler(error, req, res, nextFn);
+
     expect(res.statusCode).toEqual(400);
     expect(res._getJSONData()).toEqual({
       message: 'msg',
@@ -65,7 +71,9 @@ describe('errorHandler middleware', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
     const error = new Error('msg');
+
     errorHandler(error, req, res, nextFn);
+
     expect(res.statusCode).toEqual(500);
     expect(res._getJSONData()).toEqual({
       message: 'Internal server error',
