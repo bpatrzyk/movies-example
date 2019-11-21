@@ -25,6 +25,9 @@
     ],
     "modulePathIgnorePatterns": [
       "<rootDir>/dist"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
     ]
   },
   "devDependencies": {
