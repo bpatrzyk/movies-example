@@ -1,77 +1,62 @@
 import * as mapper from './moviesMapper';
+import { OMDBMovie } from '../services/omdbService';
+import { Movie, MovieData } from '../models/movieModel';
+import { MovieDTO } from '../dtos/movieDTOs';
+
+const omdbMovie = {
+  Title: 'some title',
+  Year: '1994',
+  Genre: 'Comedy',
+  Country: 'US',
+} as OMDBMovie;
+
+const movieData = {
+  title: 'some title',
+  year: 1994,
+  genre: 'Comedy',
+  country: 'US',
+} as MovieData;
+
+const movie = {
+  id: 'uuid',
+  ...movieData,
+} as Movie;
+
+const movieDTO = {
+  id: 'uuid',
+  title: 'some title',
+  year: 1994,
+  genre: 'Comedy',
+  country: 'US',
+} as MovieDTO;
 
 describe('moviesMapper', () => {
   describe('toMovie', () => {
     it('maps OMDB Movie to model Movie', () => {
-      const omdbMovie = {
-        Title: 'some title',
-        Year: '1994',
-        Genre: 'Comedy',
-        Country: 'US',
-      };
-      const movie = mapper.toMovie(omdbMovie);
-      expect(movie).toEqual({
-        title: 'some title',
-        year: 1994,
-        genre: 'Comedy',
-        country: 'US',
-      });
+      const result = mapper.toMovie(omdbMovie);
+      expect(result).toEqual(movieData);
     });
 
     it('should not map incorrect year', () => {
-      const omdbMovie = {
-        Title: 'some title',
+      const result = mapper.toMovie({
+        ...omdbMovie,
         Year: 'incorrect',
-        Genre: 'Comedy',
-        Country: 'US',
-      };
-      const movie = mapper.toMovie(omdbMovie);
-      expect(movie).toEqual({
-        title: 'some title',
-        year: null,
-        genre: 'Comedy',
-        country: 'US',
       });
-    })
+      expect(result.year).toBeNull();
+    });
   });
 
   describe('toMovieDTO', () => {
     it('should map Movie to MovieDTO', () => {
-      const movie = {
-        id: 'uuid',
-        title: 'some title',
-        year: 1993,
-        genre: 'Comedy',
-        country: 'US',
-      };
-      const movieDTO = mapper.toMovieDTO(movie);
-      expect(movieDTO).toEqual({
-        id: 'uuid',
-        title: 'some title',
-        year: 1993,
-        genre: 'Comedy',
-        country: 'US',
-      });
+      const result = mapper.toMovieDTO(movie);
+      expect(result).toEqual(movieDTO);
     });
   });
 
   describe('toMoviesDTO', () => {
     it('should map Movie array to MovieDTO array', () => {
-      const movie = {
-        id: 'uuid',
-        title: 'some title',
-        year: 1993,
-        genre: 'Comedy',
-        country: 'US',
-      };
-      const movieDTO = mapper.toMoviesDTO([movie]);
-      expect(movieDTO).toEqual([{
-        id: 'uuid',
-        title: 'some title',
-        year: 1993,
-        genre: 'Comedy',
-        country: 'US',
-      }]);
+      const result = mapper.toMoviesDTO([movie]);
+      expect(result).toEqual([movieDTO]);
     });
   });
 });
