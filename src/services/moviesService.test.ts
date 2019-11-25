@@ -7,6 +7,7 @@ import { Movie } from '../models/movieModel';
 import { OMDBMovie } from './omdbService';
 
 jest.mock('../models/movieModel', () => ({
+  getMovie: jest.fn(),
   getMovies: jest.fn(),
   createMovie: jest.fn(),
   exists: jest.fn(),
@@ -19,6 +20,8 @@ jest.mock('./omdbService', () => ({
 jest.mock('../mappers/moviesMapper', () => ({
   toMovie: jest.fn(),
 }));
+
+const movieId = 'some id';
 
 const omdbMovie = {
   Title: 'some title',
@@ -39,6 +42,27 @@ const movie = {
 const movies = [movie];
 
 describe('moviesService', () => {
+  describe('getMovie', () => {
+    it('returns a single movie', async () => {
+      (model.getMovie as jest.Mock).mockResolvedValueOnce(movie);
+
+      const result = await service.getMovie(movieId);
+
+      expect(result).toEqual(movie);
+    });
+
+    it('throws NotFoundError if the movie is not found', async () => {
+      (model.getMovie as jest.Mock).mockResolvedValueOnce(undefined);
+      expect.assertions(1);
+
+      try {
+        await service.getMovie(movieId);
+      } catch (e) {
+        expect(e.message).toEqual('Movie "some id" does not exist');
+      }
+    });
+  });
+
   describe('getMovies', () => {
     it('returns list of movies', async () => {
       (model.getMovies as jest.Mock).mockResolvedValueOnce(movies);

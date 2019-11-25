@@ -1,7 +1,7 @@
 import { moviesRouter } from './moviesRouter';
 import { asyncErrorHandler } from '../utils/errors/asyncErrorHandler';
-import { getMovies, postMovie } from '../controllers/moviesController';
-import { postMovieValidator } from '../validators/moviesValidator';
+import { getMovie, getMovies, postMovie } from '../controllers/moviesController';
+import { getMovieValidator, postMovieValidator } from '../validators/moviesValidator';
 
 jest.mock('../utils/errors/asyncErrorHandler', () => ({
   asyncErrorHandler: jest.fn().mockImplementation(arg => arg),
@@ -15,6 +15,14 @@ jest.mock('../validators/moviesValidator', () => ({
 }));
 
 describe('moveisRouter', () => {
+  it('should register GET movie route', () => {
+    expect(moviesRouter.get).toHaveBeenCalledWith(
+      '/:movie_id',
+      getMovieValidator,
+      asyncErrorHandler(getMovie),
+    );
+  });
+
   it('should register GET movies route', () => {
     expect(moviesRouter.get).toHaveBeenCalledWith('/', asyncErrorHandler(getMovies));
   });

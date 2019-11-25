@@ -1,6 +1,8 @@
 import { db } from './db';
 
-import { getMovies, createMovie, exists, Movie, MovieData } from './movieModel';
+import { getMovie, getMovies, createMovie, exists, Movie, MovieData } from './movieModel';
+
+const movieId = 'some id';
 
 const movie = {
   id: 'some id',
@@ -20,6 +22,21 @@ const movieData = {
 describe('movieModel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('getMovie', () => {
+    it('selects a single movie from db', async () => {
+      (db().then as jest.Mock).mockImplementationOnce(done => {
+        done(movie);
+      });
+
+      const movies = await getMovie(movieId);
+
+      expect(db).toBeCalledWith('movies');
+      expect(db('movies').where).toBeCalledWith({ id: movieId });
+      expect(db('movies').first).toBeCalledWith();
+      expect(movies).toEqual(movie);
+    });
   });
 
   describe('getMovies', () => {

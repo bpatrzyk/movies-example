@@ -11,6 +11,12 @@ export interface Movie extends MovieData {
   id: string;
 }
 
+export async function getMovie(movieId: string) {
+  return db<Movie>('movies')
+    .where({ id: movieId })
+    .first();
+}
+
 export async function getMovies() {
   return db<Movie>('movies').select();
 }

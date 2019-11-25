@@ -2,6 +2,17 @@ import * as model from '../models/movieModel';
 import * as OMDBService from './omdbService';
 import { toMovie } from '../mappers/moviesMapper';
 import { ClientError } from '../utils/errors/ClientError';
+import { NotFoundError } from '../utils/errors/NotFoundError';
+
+export async function getMovie(movieId: string) {
+  const movie = await model.getMovie(movieId);
+
+  if (!movie) {
+    throw new NotFoundError(`Movie "${movieId}" does not exist`);
+  }
+
+  return movie;
+}
 
 export async function getMovies() {
   return await model.getMovies();
