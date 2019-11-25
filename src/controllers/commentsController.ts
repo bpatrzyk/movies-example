@@ -23,6 +23,11 @@ export async function getCommentsForMovie(req: Request, res: Response) {
 
 export async function postComment(req: Request, res: Response) {
   const newCommentDTO = req.body as NewCommentDTO;
+  const movie = await moviesService.getMovie(newCommentDTO.movieId);
+  if (!movie) {
+    throw new NotFoundError(`Movie "${newCommentDTO.movieId}" does not exist`);
+  }
+
   const comment = await service.createComment(mapper.toCommentData(newCommentDTO));
   res.send(mapper.toCommentDTO(comment));
 }

@@ -61,6 +61,10 @@ const movie = {
 } as Movie;
 
 describe('commentsController', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('getComments', () => {
     beforeEach(() => {
       (service.getComments as jest.Mock).mockImplementationOnce(async () => [comment]);
@@ -170,6 +174,7 @@ describe('commentsController', () => {
       (mapper.toCommentData as jest.Mock).mockImplementationOnce(() => commentData);
       (service.createComment as jest.Mock).mockImplementationOnce(async () => comment);
       (mapper.toCommentDTO as jest.Mock).mockImplementationOnce(() => commentDTO);
+      (moviesService.getMovie as jest.Mock).mockResolvedValueOnce(movie);
     });
 
     it('maps request DTO to model object', async () => {
@@ -178,6 +183,28 @@ describe('commentsController', () => {
       await postComment(req, res);
 
       expect(mapper.toCommentData).toHaveBeenCalledWith(newCommentDTO);
+    });
+
+    it('checks if movie exists', async () => {
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body: newCommentDTO }, {});
+
+      await postComment(req, res);
+
+      expect(moviesService.getMovie).toHaveBeenCalledWith('movie id');
+    });
+
+    it('throws NotFoundError if the movie is not found', async () => {
+      (moviesService.getMovie as jest.Mock).mockReset();
+      (moviesService.getMovie as jest.Mock).mockResolvedValueOnce(undefined);
+
+      const { req, res } = httpMocks.createMocks<Request, Response>({ body: newCommentDTO }, {});
+      expect.assertions(1);
+
+      try {
+        await postComment(req, res);
+      } catch (e) {
+        expect(e.message).toEqual('Movie "movie id" does not exist');
+      }
     });
 
     it('calls create comment service', async () => {
