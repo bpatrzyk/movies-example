@@ -11,8 +11,7 @@ export interface CommentData {
 }
 
 export async function getComments() {
-  return db<Comment>('comments')
-    .select();
+  return db<Comment>('comments').select();
 }
 
 export async function createComment(comment: CommentData) {

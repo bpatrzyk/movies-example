@@ -49,13 +49,14 @@ export async function getMovie(title: string) {
   });
 
   const response = await fetch(queryUrl);
-  const movie = await response.json() as OMDBMovie;
+  const movie = (await response.json()) as OMDBMovie;
 
   logger.debug(`Received response from OMDB service for movie "${title}"`, {
     searchParams: {
       title,
       queryUrl: queryUrl.href,
-    }, response: movie,
+    },
+    response: movie,
   });
 
   if (_.get(movie, 'Response') !== 'True') {

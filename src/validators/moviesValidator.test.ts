@@ -27,7 +27,10 @@ describe('moviesValidator', () => {
     });
 
     it('trims the title', async () => {
-      const { req, res } = httpMocks.createMocks<Request, Response>({ body: { title: '    some title     ' } }, {});
+      const { req, res } = httpMocks.createMocks<Request, Response>(
+        { body: { title: '    some title     ' } },
+        {},
+      );
       await testExpressValidatorMiddleware(req, res, postMovieValidator);
       const result = validationResult(req);
       expect(result.array()).toEqual([]);

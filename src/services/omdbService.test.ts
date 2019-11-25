@@ -25,19 +25,21 @@ const movie = {
 describe('omdbService', () => {
   describe('getMovie', () => {
     it('should create query url', async () => {
-      (fetch as unknown as jest.Mock).mockResolvedValueOnce({
+      ((fetch as unknown) as jest.Mock).mockResolvedValueOnce({
         json: () => movie,
       });
 
       await getMovie(title);
 
-      expect(fetch).toHaveBeenCalledWith(expect.objectContaining({
-        href: 'http://www.omdbapi.com/?apikey=undefined&t=some%20title',
-      }));
+      expect(fetch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          href: 'http://www.omdbapi.com/?apikey=undefined&t=some%20title',
+        }),
+      );
     });
 
     it('should return movie data', async () => {
-      (fetch as unknown as jest.Mock).mockResolvedValueOnce({
+      ((fetch as unknown) as jest.Mock).mockResolvedValueOnce({
         json: () => movie,
       });
 
@@ -47,7 +49,7 @@ describe('omdbService', () => {
     });
 
     it('should throw exception on fetch errors', async () => {
-      (fetch as unknown as jest.Mock).mockRejectedValueOnce({
+      ((fetch as unknown) as jest.Mock).mockRejectedValueOnce({
         error: 'error',
       });
 
@@ -60,7 +62,7 @@ describe('omdbService', () => {
     });
 
     it('should throw exception on API errors', async () => {
-      (fetch as unknown as jest.Mock).mockResolvedValueOnce({
+      ((fetch as unknown) as jest.Mock).mockResolvedValueOnce({
         json: () => ({
           ...movie,
           Response: 'False',

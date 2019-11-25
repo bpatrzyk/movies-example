@@ -12,8 +12,7 @@ export interface Movie extends MovieData {
 }
 
 export async function getMovies() {
-  return db<Movie>('movies')
-    .select();
+  return db<Movie>('movies').select();
 }
 
 export async function createMovie(movie: MovieData) {
@@ -24,7 +23,8 @@ export async function createMovie(movie: MovieData) {
 }
 
 export async function exists(title: string) {
-  const result = await db('movies').select(1)
+  const result = await db('movies')
+    .select(1)
     .where({ title });
   return result.length > 0;
 }

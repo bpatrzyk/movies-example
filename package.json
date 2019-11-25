@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix",
+    "prettier": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md}",
     "lint-check": "tslint -p tsconfig.json -c tslint.json",
     "build": "npm run clean && tsc",
     "start": "node .",
@@ -34,13 +35,30 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
     ],
-    "setupFiles": ["<rootDir>/.jest/setEnvVars.ts"]
+    "setupFiles": [
+      "<rootDir>/.jest/setEnvVars.ts"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,css,md}": [
+      "prettier --write",
+      "tslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
+    "lint-staged": "^9.4.3",
     "node-mocks-http": "^1.8.0",
     "nodemon": "^1.19.4",
+    "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.1"
   },

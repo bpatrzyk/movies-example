@@ -10,7 +10,7 @@ jest.mock('express-validator', () => ({
 describe('validator middleware', () => {
   it('throws ValidationErrors if validation failed', () => {
     expect.assertions(2);
-    (validationResult as unknown as jest.Mock).mockImplementationOnce(() => ({
+    ((validationResult as unknown) as jest.Mock).mockImplementationOnce(() => ({
       isEmpty: () => {
         return false;
       },
@@ -29,7 +29,7 @@ describe('validator middleware', () => {
   });
 
   it('calls next function if validation passed', () => {
-    (validationResult as unknown as jest.Mock).mockImplementationOnce(() => ({
+    ((validationResult as unknown) as jest.Mock).mockImplementationOnce(() => ({
       isEmpty: () => {
         return true;
       },

@@ -21,12 +21,14 @@ describe('errorHandler middleware', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
 
-    const validationErrors = [{
-      value: undefined,
-      msg: 'Invalid value',
-      param: 'movieId',
-      location: 'body',
-    }] as ExpressValidationError[];
+    const validationErrors = [
+      {
+        value: undefined,
+        msg: 'Invalid value',
+        param: 'movieId',
+        location: 'body',
+      },
+    ] as ExpressValidationError[];
     const error = new ValidationError('msg', validationErrors);
 
     errorHandler(error, req, res, nextFn);
@@ -42,13 +44,13 @@ describe('errorHandler middleware', () => {
   it('handles ApiError', () => {
     const { req, res } = httpMocks.createMocks<Request, Response>({}, {});
     const nextFn = jest.fn();
-    const error = new ApiError(418, 'I\'m a Teapot');
+    const error = new ApiError(418, "I'm a Teapot");
 
     errorHandler(error, req, res, nextFn);
 
     expect(res.statusCode).toEqual(418);
     expect(res._getJSONData()).toEqual({
-      message: 'I\'m a Teapot',
+      message: "I'm a Teapot",
     });
     expect(res._isEndCalled()).toBeTruthy();
   });

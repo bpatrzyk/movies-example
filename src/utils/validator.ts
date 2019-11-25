@@ -5,8 +5,11 @@ import { ValidationChain } from 'express-validator';
 export async function testExpressValidatorMiddleware(
   req: Request,
   res: Response,
-  middlewares: Array<ValidationChain | ((req: Request, res: Response, next: NextFunction) => void)>) {
-  await Promise.all(middlewares.map(async middleware => {
-    await middleware(req, res, () => undefined);
-  }));
+  middlewares: Array<ValidationChain | ((req: Request, res: Response, next: NextFunction) => void)>,
+) {
+  await Promise.all(
+    middlewares.map(async middleware => {
+      await middleware(req, res, () => undefined);
+    }),
+  );
 }

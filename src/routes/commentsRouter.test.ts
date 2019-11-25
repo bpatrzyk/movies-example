@@ -7,14 +7,11 @@ jest.mock('../utils/errors/asyncErrorHandler', () => ({
   asyncErrorHandler: jest.fn().mockImplementation(arg => arg),
 }));
 jest.mock('../controllers/commentsController', () => ({
-  getComments: function getComments() {
-  },
-  postComment: function postComment() {
-  },
+  getComments: jest.fn(),
+  postComment: jest.fn(),
 }));
 jest.mock('../validators/commentsValidator', () => ({
-  postCommentValidator: function postCommentValidator() {
-  },
+  postCommentValidator: jest.fn(),
 }));
 
 describe('commentsRouter', () => {
@@ -23,6 +20,10 @@ describe('commentsRouter', () => {
   });
 
   it('should register POST comment route', () => {
-    expect(commentsRouter.post).toHaveBeenCalledWith('/', postCommentValidator, asyncErrorHandler(postComment));
+    expect(commentsRouter.post).toHaveBeenCalledWith(
+      '/',
+      postCommentValidator,
+      asyncErrorHandler(postComment),
+    );
   });
 });
