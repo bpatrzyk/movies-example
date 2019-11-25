@@ -40,4 +40,16 @@ commentsRouter.post('/', postCommentValidator, asyncErrorHandler(postComment));
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/CommentDTO'
+ *        "400":
+ *          description: Validation error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ValidationError'
+ *        "404":
+ *          description: Movie does not exist
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ApiError'
  */

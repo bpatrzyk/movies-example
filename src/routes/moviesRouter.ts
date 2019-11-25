@@ -43,6 +43,14 @@ moviesRouter.post('/', postMovieValidator, asyncErrorHandler(postMovie));
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/MovieDTO'
+ *        "400":
+ *          description: Movie already exists, movie does not exist or validation error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                oneOf:
+ *                  - $ref: '#/components/schemas/ApiError'
+ *                  - $ref: '#/components/schemas/ValidationError'
  *  /movies/{movie_id}:
  *    get:
  *      summary: Get a single movie
@@ -60,6 +68,18 @@ moviesRouter.post('/', postMovieValidator, asyncErrorHandler(postMovie));
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/MovieDTO'
+ *        "400":
+ *          description: Validation error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ValidationError'
+ *        "404":
+ *          description: Movie does not exist
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ApiError'
  *  /movies/{movie_id}/comments:
  *    get:
  *      summary: Get comments for a movie
@@ -79,4 +99,16 @@ moviesRouter.post('/', postMovieValidator, asyncErrorHandler(postMovie));
  *                type: 'array'
  *                items:
  *                  $ref: '#/components/schemas/CommentDTO'
+ *        "400":
+ *          description: Validation error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ValidationError'
+ *        "404":
+ *          description: Movie does not exist
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ApiError'
  */

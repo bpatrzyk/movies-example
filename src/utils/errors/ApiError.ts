@@ -6,3 +6,18 @@ export class ApiError extends Error {
     this.statusCode = statusCode;
   }
 }
+
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      ApiError:
+ *        type: object
+ *        required:
+ *          - message
+ *        properties:
+ *          message:
+ *            type: string
+ *        example:
+ *           message: Internal Server Error
+ */
