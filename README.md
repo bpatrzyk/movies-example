@@ -38,6 +38,11 @@ To apply all migrations run the `db:latest` script:
 yarn db:latest
 ```
 
+### Build the project
+```bash
+yarn build
+```
+
 ## Running the project
 After all the prerequisites specified in **Project setup** section are configured, the application can be started either in `production` or in `development` mode.
 ### Starting application for production
@@ -73,4 +78,47 @@ yarn lint
 Without applying fixes (used with CI):
 ```bash
 yarn lint-check
+```
+
+## Running the project with Docker
+### Building the Docker image
+The Docker image with the application can be build using the following command:
+```bash
+docker build .
+```
+However, it is recommended to use the image with docker-compose config.
+
+### Docker Compose
+The Docker Compose configuration allows to start the server, the database and run the migrations with a single command.
+
+#### Environment variables
+The following environment variables need to be configured to use Docker Compose configuration:
+
+| Variable name | Default value | description |
+| --- | --- | --- |
+| PORT | - | The port on which the server is exposed |
+| DATABASE_PASSWORD | - | Postgres database password |
+| OMDB_API_KEY | - | OMDB API key |
+| LOG_LEVEL | `error` | Logger log level |
+
+They can also be configured with `.env` file.
+
+#### Using docker-compose
+The following command builds the images and starts the containers:
+```bash
+docker-compose up -d
+```
+
+All containers can be stopped with the following command:
+```bash
+docker-compose stop
+```
+
+To stop and remove the containers run:
+```bash
+docker-compose down
+```
+Please note that it doesn't remove the Postgres data volume `movies-example_postgres-data`. In order to remove the data volume run:
+```bash 
+docker volume rm movies-example_postgres-data
 ```
