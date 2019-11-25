@@ -14,6 +14,8 @@ const commentData = {
   comment: 'some comment',
 } as CommentData;
 
+const movieId = 'movie id';
+
 describe('commentModel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -28,6 +30,20 @@ describe('commentModel', () => {
       const comments = await getComments();
 
       expect(db).toBeCalledWith('comments');
+      expect(db('comments').where).not.toBeCalled();
+      expect(db('comments').select).toBeCalledWith();
+      expect(comments).toEqual([comment]);
+    });
+
+    it('selects all comments from db for a specific movie', async () => {
+      (db().then as jest.Mock).mockImplementationOnce(done => {
+        done([comment]);
+      });
+
+      const comments = await getComments({ movieId });
+
+      expect(db).toBeCalledWith('comments');
+      expect(db('comments').where).toBeCalledWith({ movie_id: movieId });
       expect(db('comments').select).toBeCalledWith();
       expect(comments).toEqual([comment]);
     });

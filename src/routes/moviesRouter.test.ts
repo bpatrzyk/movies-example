@@ -1,6 +1,7 @@
 import { moviesRouter } from './moviesRouter';
 import { asyncErrorHandler } from '../utils/errors/asyncErrorHandler';
 import { getMovie, getMovies, postMovie } from '../controllers/moviesController';
+import { getCommentsForMovie } from '../controllers/commentsController';
 import { getMovieValidator, postMovieValidator } from '../validators/moviesValidator';
 
 jest.mock('../utils/errors/asyncErrorHandler', () => ({
@@ -20,6 +21,14 @@ describe('moveisRouter', () => {
       '/:movie_id',
       getMovieValidator,
       asyncErrorHandler(getMovie),
+    );
+  });
+
+  it('should register GET comments for movie route', () => {
+    expect(moviesRouter.get).toHaveBeenCalledWith(
+      '/:movie_id/comments',
+      getMovieValidator,
+      asyncErrorHandler(getCommentsForMovie),
     );
   });
 

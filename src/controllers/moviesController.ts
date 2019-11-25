@@ -2,10 +2,16 @@ import { Request, Response } from 'express';
 import * as service from '../services/moviesService';
 import * as mapper from '../mappers/moviesMapper';
 import { NewMovieDTO } from '../dtos/movieDTOs';
+import { NotFoundError } from '../utils/errors/NotFoundError';
 
 export async function getMovie(req: Request, res: Response) {
   const movieId = req.params.movie_id;
   const movie = await service.getMovie(movieId);
+
+  if (!movie) {
+    throw new NotFoundError(`Movie "${movieId}" does not exist`);
+  }
+
   res.send(mapper.toMovieDTO(movie));
 }
 

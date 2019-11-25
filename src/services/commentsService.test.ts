@@ -4,6 +4,7 @@ import { Comment, CommentData } from '../models/commentModel';
 
 jest.mock('../models/commentModel', () => ({
   getComments: jest.fn(),
+  getCommentsForMovie: jest.fn(),
   createComment: jest.fn(),
 }));
 
@@ -20,6 +21,8 @@ const commentData = {
   comment: 'some comment',
 } as CommentData;
 
+const movieId = 'some id';
+
 describe('commentsService', () => {
   describe('getComments', () => {
     it('returns list of comments', async () => {
@@ -28,6 +31,17 @@ describe('commentsService', () => {
       const result = await service.getComments();
 
       expect(result).toEqual([comment]);
+    });
+  });
+
+  describe('getCommentsForMovie', () => {
+    it('returns list of comments for a movie', async () => {
+      (model.getComments as jest.Mock).mockResolvedValueOnce([comment]);
+
+      const result = await service.getCommentsForMovie(movieId);
+
+      expect(result).toEqual([comment]);
+      expect(model.getComments).toBeCalledWith({ movieId });
     });
   });
 

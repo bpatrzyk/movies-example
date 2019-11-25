@@ -58,6 +58,23 @@ describe('moviesController', () => {
       expect(service.getMovie).toHaveBeenCalledWith(movieId);
     });
 
+    it('throws NotFoundError if the movie is not found', async () => {
+      (service.getMovie as jest.Mock).mockReset();
+      (service.getMovie as jest.Mock).mockResolvedValueOnce(undefined);
+
+      const { req, res } = httpMocks.createMocks<Request, Response>(
+        { params: { movie_id: movieId } },
+        {},
+      );
+      expect.assertions(1);
+
+      try {
+        await getMovie(req, res);
+      } catch (e) {
+        expect(e.message).toEqual('Movie "some id" does not exist');
+      }
+    });
+
     it('maps movie to DTO', async () => {
       const { req, res } = httpMocks.createMocks<Request, Response>(
         { params: { movie_id: movieId } },

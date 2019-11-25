@@ -2,7 +2,6 @@ import * as service from './moviesService';
 import * as model from '../models/movieModel';
 import * as OMDBService from './omdbService';
 import { toMovie } from '../mappers/moviesMapper';
-import { ClientError } from '../utils/errors/ClientError';
 import { Movie } from '../models/movieModel';
 import { OMDBMovie } from './omdbService';
 
@@ -49,17 +48,6 @@ describe('moviesService', () => {
       const result = await service.getMovie(movieId);
 
       expect(result).toEqual(movie);
-    });
-
-    it('throws NotFoundError if the movie is not found', async () => {
-      (model.getMovie as jest.Mock).mockResolvedValueOnce(undefined);
-      expect.assertions(1);
-
-      try {
-        await service.getMovie(movieId);
-      } catch (e) {
-        expect(e.message).toEqual('Movie "some id" does not exist');
-      }
     });
   });
 
