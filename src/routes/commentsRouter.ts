@@ -7,3 +7,37 @@ export const commentsRouter: Router = Router();
 
 commentsRouter.get('/', asyncErrorHandler(getComments));
 commentsRouter.post('/', postCommentValidator, asyncErrorHandler(postComment));
+
+/**
+ * @swagger
+ * path:
+ *  /comments/:
+ *    get:
+ *      summary: Get all comments
+ *      tags: [Comments]
+ *      responses:
+ *        "200":
+ *          description: An array of comments
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: 'array'
+ *                items:
+ *                  $ref: '#/components/schemas/CommentDTO'
+ *    post:
+ *      summary: Create a comment
+ *      tags: [Comments]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/NewCommentDTO'
+ *      responses:
+ *        "200":
+ *          description: A created post
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/CommentDTO'
+ */

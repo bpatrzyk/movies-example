@@ -4,6 +4,7 @@ dotenv();
 
 import express from 'express';
 import { apiV1 } from './routes/apiV1';
+import { swaggerRouter } from './routes/swaggerRouter';
 import { errorHandler } from './middlewares/errorHandler';
 import { logger } from './utils/logger';
 import { errorLogMiddleware, logMiddleware } from './middlewares/logger';
@@ -14,6 +15,7 @@ const app = express();
 app.use(logMiddleware);
 
 app.use('/api/v1', apiV1);
+app.use('/', swaggerRouter);
 
 app.use(errorLogMiddleware);
 app.use(errorHandler);

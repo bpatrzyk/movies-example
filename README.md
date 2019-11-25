@@ -122,3 +122,6 @@ Please note that it doesn't remove the Postgres data volume `movies-example_post
 ```bash 
 docker volume rm movies-example_postgres-data
 ```
+
+## API documentation
+Swagger UI is available at the `/docs` path.
