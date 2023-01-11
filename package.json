@@ -77,7 +77,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
     "express-winston": "^4.0.1",
-    "knex": "^0.20.2",
+    "knex": "^2.4.0",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "pg": "^7.12.1",
